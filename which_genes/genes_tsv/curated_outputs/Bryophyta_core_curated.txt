@@ -5,6 +5,7 @@ atpE
 atpF
 atpH
 atpI
+ccsA
 cemA
 chlB
 chlL
@@ -28,6 +29,7 @@ petB
 petD
 petG
 petL
+petN
 psaA
 psaB
 psaC
@@ -60,6 +62,7 @@ rpl23
 rpl32
 rpl33
 rpl36
+rpoA
 rpoB
 rpoC1
 rpoC2

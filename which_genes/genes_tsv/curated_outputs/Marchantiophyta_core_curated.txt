@@ -1,4 +1,3 @@
-16S
 accD
 atpA
 atpB
@@ -24,6 +23,7 @@ ndhE
 ndhF
 ndhG
 ndhH
+ndhI
 ndhJ
 ndhK
 petA
@@ -35,6 +35,7 @@ petN
 psaA
 psaB
 psaC
+psaI
 psaJ
 psaM
 psbA

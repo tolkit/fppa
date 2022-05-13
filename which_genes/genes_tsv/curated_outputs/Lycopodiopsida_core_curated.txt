@@ -78,7 +78,6 @@ rps3
 rps4
 rps7
 rps8
-tufA
 ycf1
 ycf12
 ycf2
