@@ -3,7 +3,6 @@
 5rrn
 rrn16
 rrn23
-rrn26
 rrn4.5
 rrn5
 trnA(UGC)
