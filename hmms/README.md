@@ -22,7 +22,7 @@ nu make_hmms.nu
 ```
 
 **Warning**
-> Warning to future me and anyone else
+> Warning to future me and anyone else, there were/are plenty of sequences downloaded from NCBI which weren't actually the specified gene/tRNA. I've done my best to filter out where I can, but things will have slipped through the net. My hope is that this will not be a big problem.
 
 Acrogymnospermae_core:
 - aacD re-do (delete some fasta entries.) done
