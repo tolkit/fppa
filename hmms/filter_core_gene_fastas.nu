@@ -1,4 +1,5 @@
 ls *_core/*.fasta
+    | where $it.name == "Acrogymnospermae_core/matK.fasta"
     | get name
     | each { |e| 
         let split_path = ($e | path split)
@@ -9,7 +10,7 @@ ls *_core/*.fasta
 
         # and we want to remove sequences that are too long/far away from the mean.
         # we can do this by using the mean and standard deviation of the lengths of the sequences.
-        let sample = (mmft len $e | from tsv -n | get column3)
+        let sample = (mmft regex -ir "hypothetical" $e | mmft len | from tsv -n | get column2)
         let sqrt_sample_size = ($sample | length | math sqrt)
         let std_err_mean = (($sample | math stddev) / $sqrt_sample_size)
         let mean = ($sample | math avg)
@@ -30,7 +31,8 @@ ls *_core/*.fasta
         # this removes any wacky hypothetical sequences
         # and if there are more than 1000 records, it will
         # randomly sample 1000 records.
-        mmft len -le $cutoff $e | mmft regex -ir "hypothetical" | mmft sample -n $max_records | save $out
+        mmft len -le $cutoff $e | mmft regex -ir "hypothetical" | mmft sample -n $max_records 
+        # | save $out
         
         # problems here?
         # weirdly my errors disappear when I do this

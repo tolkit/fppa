@@ -1,5 +1,7 @@
 # Pipeline
 
+The core gene counterpart of the pipeline takes a *very* long time as currently implemented (~1 day).
+
 ```nu
 # get all the genes first
 nu get_core_genes.nu
@@ -17,7 +19,24 @@ nu make_hmms.nu
 ```
 
 Acrogymnospermae_core:
-- aacD re-do (delete some fasta entries.)
+- aacD re-do (delete some fasta entries.) done
 
 Marchantiophyta_core:
 - ycf68 deleted
+
+MSA's that might need re-doing:
+- Acrogymnospermae_core
+  - matK done
+  - psbA done
+- Magnoliopsida_core
+  - accD done (though still a bit wacky)
+  - matK done
+  - psbB done
+  - rpl22 done
+  - ycf1
+  - ycf2
+- Marchantiophyta_core
+  - rbcL
+- Polypodiopsida_core
+  - psbZ
+  - ycf1

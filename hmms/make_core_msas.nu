@@ -9,7 +9,7 @@ ls *_core/*_filtered.fasta
 
         let out = ([$dir $file] | path join)
 
-        aa2nucaln --fasta $e | /Users/mb39/homebrew/Cellar/mafft/7.471/bin/mafft --auto --thread 4 - | save $out
+        /Users/mb39/homebrew/Cellar/mafft/7.471/bin/mafft --auto --thread 4 $e | aa2nucaln | save $out
         # problems here?
         sleep 333ms
         }
