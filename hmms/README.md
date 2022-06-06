@@ -1,6 +1,6 @@
 # Pipeline
 
-The core gene counterpart of the pipeline takes a *very* long time as currently implemented (~1 day).
+Briefly as follows:
 
 ```nu
 # get all the genes first
@@ -13,10 +13,16 @@ nu get_trna_fastas.nu
 nu make_trna_msas.nu
 # the core genes need to be filtered
 # as many contain hypothetical proteins
+nu filter_core_gene_fastas.nu
+# then make the core gene msa's
+nu make_core_msas.nu
 
 # then we can make the HMM's
 nu make_hmms.nu
 ```
+
+**Warning**
+> Warning to future me and anyone else
 
 Acrogymnospermae_core:
 - aacD re-do (delete some fasta entries.) done
