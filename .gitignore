@@ -1,2 +1,6 @@
 hmms/*_core/
 hmms/*_tRNA/
+
+# Added by cargo
+
+/target

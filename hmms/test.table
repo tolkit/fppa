@@ -1,0 +1,12 @@
+# target name                               accession  query name           accession  hmmfrom hmm to alifrom  ali to envfrom  env to  sq len strand   E-value  score  bias  description of target
+#                       ------------------- ---------- -------------------- ---------- ------- ------- ------- ------- ------- ------- ------- ------ --------- ------ ----- ---------------------
+#
+# Program:         nhmmer
+# Version:         3.3.2 (Nov 2020)
+# Pipeline mode:   SEARCH
+# Query file:      ./Magnoliopsida/ycf1.hmm
+# Target file:     ../genomes//lpJunEffu1.fasta
+# Option settings: /Users/mb39/bin/nhmmer --tblout test.table -E 0.01 ./Magnoliopsida/ycf1.hmm ../genomes//lpJunEffu1.fasta 
+# Current dir:     /Users/mb39/Documents/fppa/hmms
+# Date:            Mon Jun  6 19:42:26 2022
+# [ok]
