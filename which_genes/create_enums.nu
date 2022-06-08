@@ -94,24 +94,4 @@ $polypodiopsida_core
     | sort
     | each { |e| let f = ($e | str replace '\(' '_' | str replace '\)' '' | str replace '\.5' ''); print $"($f)," }
 
-# display
-# $acrogymnospermae_core 
-#     | append $acrogymnospermae_trna 
-#     | append $bryophyta_core 
-#     | append $bryophyta_trna 
-#     | append $lycopodiopsida_core 
-#     | append $lycopodiopsida_trna 
-#     | append $magnoliopsida_core 
-#     | append $magnoliopsida_trna 
-#     | append $polypodiopsida_core 
-#     | append $polypodiopsida_trna 
-#     | append $anthocerotophyta_core 
-#     | append $anthocerotophyta_trna 
-#     | sort | uniq
-#     | each {
-#         |e| print $"($e | str replace '\(' '_' | str replace '\)' '' | str replace '\.5' ''),"
-    # }
-# $bryophyta
-# $lycopodiopsida 
-# $magnoliopsida 
-# $polypodiopsida 
+

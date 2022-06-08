@@ -7,6 +7,8 @@
 //!
 //! The `gff` module creates GFF3 files from the nhmmer.table files.
 //!
+//! For an example of what the plot looks like, please see
+//! <b><a href="chloro.html">this example.</a></b>
 
 use std::{
     fmt::{Display, Formatter},
