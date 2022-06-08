@@ -75,7 +75,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     )?;
 
     let mut table_parser = Nhmmer::new();
-    table_parser.read_tables_and_parse(&tmp_dir, clade)?;
+    table_parser.read_tables_and_parse(&tmp_dir, clade, for_rotation)?;
 
     if gff_path.is_some() {
         table_parser.make_gff3(gff_path.unwrap(), e_value)?;

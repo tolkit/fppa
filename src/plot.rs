@@ -191,7 +191,7 @@ fn generate_plot_annotations(data: &PlotData) -> String {
 
     // iterate over the chromosomes
     // reverse because SVG coordinate system.
-    for (mut el, (contig_id, ChloroGenes)) in data.data.iter().enumerate().rev() {
+    for (mut el, (contig_id, chloro_gene)) in data.data.iter().enumerate().rev() {
         // el == 0 does nothing, so add 1!
         el += 1;
         let x1 = MARGIN;
@@ -223,10 +223,10 @@ fn generate_plot_annotations(data: &PlotData) -> String {
         base_chroms += &mid_line;
         base_chroms += &contig_text_label;
 
-        // now add each of the ChloroGenes in turn
+        // now add each of the chloro_gene in turn
         // data point scales
         let x_data_min = 0.0;
-        let x_data_max = ChloroGenes[0].seq_len as f32;
+        let x_data_max = chloro_gene[0].seq_len as f32;
         // visualisation scales
         let x_viz_min = x1 as f32;
         let x_viz_max = x2 as f32;
@@ -238,7 +238,7 @@ fn generate_plot_annotations(data: &PlotData) -> String {
             strand,
             e_value,
             seq_len,
-        } in ChloroGenes
+        } in chloro_gene
         {
             // find the start and end of the genes
             let x1_scaled = scale_x(
@@ -268,21 +268,21 @@ fn generate_plot_annotations(data: &PlotData) -> String {
             };
 
             // gene range in bp in a newline.
-            let ChloroGene_plus_range = format!(
-                "\"<b>\" + {:?} + \"</b>\" + \"<br/>\" + \"{} &rarr; {} bp\" + \"<br/>\" + \"<b>E-value</b>: {}\"",
+            let chloro_gene_plus_range = format!(
+                "\"<b>\" + {:?} + \"</b>\" + \"<br/>\" + \"{} &rarr; {} bp\" + \"<br/>\" + \"<b>E-value</b>: {:.7}\"",
                 query_name,
                 format_bp_pretty(*env_from),
                 format_bp_pretty(*env_to),
-                format!("{:.7}", e_value)
+                e_value
             );
 
             let gene_line = format!("
-                <line x1='{x1_scaled}' y1='{y_gene}' x2='{x2_scaled}' y2='{y_gene}' stroke='black' style = 'stroke-width: 3;' {marker} onmousemove='showTooltip(evt, {ChloroGene_plus_range});' onmouseout='hideTooltip();'/>"
+                <line x1='{x1_scaled}' y1='{y_gene}' x2='{x2_scaled}' y2='{y_gene}' stroke='black' style = 'stroke-width: 3;' {marker} onmousemove='showTooltip(evt, {chloro_gene_plus_range});' onmouseout='hideTooltip();'/>"
             );
 
             // because SVG markers don't trigger events for some reason...
             let circle_hover = format!(
-                "<circle r='5' fill='transparent' cx='{x2_scaled}' cy='{y_gene}' onmousemove='showTooltip(evt, {ChloroGene_plus_range});' onmouseout='hideTooltip();'></circle>"
+                "<circle r='5' fill='transparent' cx='{x2_scaled}' cy='{y_gene}' onmousemove='showTooltip(evt, {chloro_gene_plus_range});' onmouseout='hideTooltip();'></circle>"
             );
 
             base_chroms += &gene_line;

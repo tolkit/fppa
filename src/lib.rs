@@ -1119,6 +1119,7 @@ pub struct NhmmerRow {
 pub struct Nhmmer {
     pub rows: Vec<NhmmerRow>,
     pub gene_set: Option<Vec<String>>,
+    pub for_rotation: Option<bool>,
 }
 
 impl Nhmmer {
@@ -1127,6 +1128,7 @@ impl Nhmmer {
         Self {
             rows: vec![],
             gene_set: None,
+            for_rotation: None,
         }
     }
 
@@ -1140,6 +1142,7 @@ impl Nhmmer {
         &mut self,
         tmp_dir: &TempDir,
         clade: Clade,
+        for_rotation: bool,
     ) -> Result<(), Box<dyn std::error::Error>> {
         // this gets all the files in the table path directory
         let tables = fs::read_dir(tmp_dir)?;
@@ -1148,8 +1151,21 @@ impl Nhmmer {
         // make sure we set clade here
         self.gene_set = Some(gene_set.clone());
 
+        if for_rotation {
+            self.for_rotation = Some(true);
+        } else {
+            self.for_rotation = Some(false);
+        }
+
+        // modify gene set according to for_rotation
+        // safe to unwrap here.
+        if self.for_rotation.unwrap() {
+            // hard code the two genes we are interested in.
+            self.gene_set = Some(vec!["ycf1".to_string(), "psbA".to_string()]);
+        }
+
         for table in tables {
-            let table_path = table.expect("Could not open table path").path();
+            let table_path = table?.path();
 
             let table_file = fs::File::open(table_path)?;
             let table_file_lr = io::BufReader::new(table_file).lines();
