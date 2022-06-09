@@ -4,3 +4,7 @@ hmms/*_tRNA/
 # Added by cargo
 
 /target
+/plots
+/gffs
+make_annotations.nu
+/genomes

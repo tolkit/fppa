@@ -49,6 +49,19 @@ fn make_html(svg: String) -> String {
         var tooltip = document.getElementById('tooltip');
         tooltip.style.display = 'none';
     }}
+
+    function addTextOnClick(evt, text) {{
+        let svgNS = 'http://www.w3.org/2000/svg';
+        let newText = document.createElementNS(svgNS, 'text');
+        newText.setAttributeNS(null, 'x', evt.pageX - 18 + 'px');
+        newText.setAttributeNS(null, 'y', evt.pageY - 18 + 'px');
+        newText.setAttributeNS(null, 'font-size', '18');
+        newText.setAttributeNS(null, 'font-family', 'monospace');
+
+        let textNode = document.createTextNode(text);
+        newText.appendChild(textNode);
+        document.getElementById('textGroup').appendChild(newText);
+    }}
 </script>
 </html>
     ",
@@ -148,6 +161,7 @@ impl PlotData {
         // construct the svg
         let svg = format!(
             "<svg width='{}' height='{}'>
+                <g id='textGroup'></g>
         <defs>
             <!-- This is an orange arrow pointer --> 
             <marker id='point_orange' viewBox='0 0 10 10'
@@ -174,9 +188,7 @@ impl PlotData {
 
         let html = make_html(svg);
 
-        html_file
-            .write_all(html.as_bytes())
-            .expect("unable to write");
+        html_file.write_all(html.as_bytes())?;
 
         Ok(())
     }
@@ -276,13 +288,15 @@ fn generate_plot_annotations(data: &PlotData) -> String {
                 e_value
             );
 
+            let gene_name = format!("\"{}\"", query_name);
+
             let gene_line = format!("
-                <line x1='{x1_scaled}' y1='{y_gene}' x2='{x2_scaled}' y2='{y_gene}' stroke='black' style = 'stroke-width: 3;' {marker} onmousemove='showTooltip(evt, {chloro_gene_plus_range});' onmouseout='hideTooltip();'/>"
+                <line x1='{x1_scaled}' y1='{y_gene}' x2='{x2_scaled}' y2='{y_gene}' stroke='black' style = 'stroke-width: 3;' {marker} onmousemove='showTooltip(evt, {chloro_gene_plus_range});' onmouseout='hideTooltip();' onclick='addTextOnClick(evt, {gene_name})'/>"
             );
 
             // because SVG markers don't trigger events for some reason...
             let circle_hover = format!(
-                "<circle r='5' fill='transparent' cx='{x2_scaled}' cy='{y_gene}' onmousemove='showTooltip(evt, {chloro_gene_plus_range});' onmouseout='hideTooltip();'></circle>"
+                "<circle r='5' fill='transparent' cx='{x2_scaled}' cy='{y_gene}' onmousemove='showTooltip(evt, {chloro_gene_plus_range});' onmouseout='hideTooltip();' onclick='addTextOnClick(evt, {gene_name})'></circle>"
             );
 
             base_chroms += &gene_line;

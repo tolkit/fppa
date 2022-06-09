@@ -1126,11 +1126,11 @@ pub struct Nhmmer {
 
 impl Nhmmer {
     /// A new `Nhmmer` instance.
-    pub fn new() -> Self {
+    pub fn new(set_for_rotation: Option<bool>) -> Self {
         Self {
             rows: vec![],
             gene_set: None,
-            for_rotation: None,
+            for_rotation: set_for_rotation,
         }
     }
 
@@ -1144,7 +1144,6 @@ impl Nhmmer {
         &mut self,
         tmp_dir: &TempDir,
         clade: Clade,
-        for_rotation: bool,
     ) -> Result<(), Box<dyn std::error::Error>> {
         // this gets all the files in the table path directory
         let tables = fs::read_dir(tmp_dir)?;
@@ -1152,12 +1151,6 @@ impl Nhmmer {
         let gene_set = clade.get_gene_set();
         // make sure we set clade here
         self.gene_set = Some(gene_set.clone());
-
-        if for_rotation {
-            self.for_rotation = Some(true);
-        } else {
-            self.for_rotation = Some(false);
-        }
 
         // modify gene set according to for_rotation
         // safe to unwrap here.
