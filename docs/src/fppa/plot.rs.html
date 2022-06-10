@@ -346,6 +346,20 @@
 <span id="341">341</span>
 <span id="342">342</span>
 <span id="343">343</span>
+<span id="344">344</span>
+<span id="345">345</span>
+<span id="346">346</span>
+<span id="347">347</span>
+<span id="348">348</span>
+<span id="349">349</span>
+<span id="350">350</span>
+<span id="351">351</span>
+<span id="352">352</span>
+<span id="353">353</span>
+<span id="354">354</span>
+<span id="355">355</span>
+<span id="356">356</span>
+<span id="357">357</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::Strand</span>;
 <span class="kw">use</span> <span class="ident">rand::Rng</span>;
 <span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">collections::BTreeMap</span>, <span class="ident">fs</span>, <span class="ident">io::Write</span>, <span class="ident">path::PathBuf</span>};
@@ -396,6 +410,19 @@
     function hideTooltip() {{
         var tooltip = document.getElementById(&#39;tooltip&#39;);
         tooltip.style.display = &#39;none&#39;;
+    }}
+
+    function addTextOnClick(evt, text) {{
+        let svgNS = &#39;http://www.w3.org/2000/svg&#39;;
+        let newText = document.createElementNS(svgNS, &#39;text&#39;);
+        newText.setAttributeNS(null, &#39;x&#39;, evt.pageX - 18 + &#39;px&#39;);
+        newText.setAttributeNS(null, &#39;y&#39;, evt.pageY - 18 + &#39;px&#39;);
+        newText.setAttributeNS(null, &#39;font-size&#39;, &#39;18&#39;);
+        newText.setAttributeNS(null, &#39;font-family&#39;, &#39;monospace&#39;);
+
+        let textNode = document.createTextNode(text);
+        newText.appendChild(textNode);
+        document.getElementById(&#39;textGroup&#39;).appendChild(newText);
     }}
 &lt;/script&gt;
 &lt;/html&gt;
@@ -515,6 +542,7 @@
             &lt;/marker&gt;
         &lt;/defs&gt;
     {}
+    &lt;g id=&#39;textGroup&#39;&gt;&lt;/g&gt;
     \
 &lt;/svg&gt;&quot;</span>,
             <span class="ident">WIDTH</span>, <span class="ident">height</span>, <span class="ident">base_chroms</span>
@@ -522,9 +550,7 @@
 
         <span class="kw">let</span> <span class="ident">html</span> <span class="op">=</span> <span class="ident">make_html</span>(<span class="ident">svg</span>);
 
-        <span class="ident">html_file</span>
-            .<span class="ident">write_all</span>(<span class="ident">html</span>.<span class="ident">as_bytes</span>())
-            .<span class="ident">expect</span>(<span class="string">&quot;unable to write&quot;</span>);
+        <span class="ident">html_file</span>.<span class="ident">write_all</span>(<span class="ident">html</span>.<span class="ident">as_bytes</span>())<span class="question-mark">?</span>;
 
         <span class="prelude-val">Ok</span>(())
     }
@@ -624,13 +650,15 @@
                 <span class="ident">e_value</span>
             );
 
+            <span class="kw">let</span> <span class="ident">gene_name</span> <span class="op">=</span> <span class="macro">format!</span>(<span class="string">&quot;\&quot;{}\&quot;&quot;</span>, <span class="ident">query_name</span>);
+
             <span class="kw">let</span> <span class="ident">gene_line</span> <span class="op">=</span> <span class="macro">format!</span>(<span class="string">&quot;
-                &lt;line x1=&#39;{x1_scaled}&#39; y1=&#39;{y_gene}&#39; x2=&#39;{x2_scaled}&#39; y2=&#39;{y_gene}&#39; stroke=&#39;black&#39; style = &#39;stroke-width: 3;&#39; {marker} onmousemove=&#39;showTooltip(evt, {chloro_gene_plus_range});&#39; onmouseout=&#39;hideTooltip();&#39;/&gt;&quot;</span>
+                &lt;line x1=&#39;{x1_scaled}&#39; y1=&#39;{y_gene}&#39; x2=&#39;{x2_scaled}&#39; y2=&#39;{y_gene}&#39; stroke=&#39;black&#39; style = &#39;stroke-width: 3;&#39; {marker} onmousemove=&#39;showTooltip(evt, {chloro_gene_plus_range});&#39; onmouseout=&#39;hideTooltip();&#39; onclick=&#39;addTextOnClick(evt, {gene_name})&#39;/&gt;&quot;</span>
             );
 
             <span class="comment">// because SVG markers don&#39;t trigger events for some reason...</span>
             <span class="kw">let</span> <span class="ident">circle_hover</span> <span class="op">=</span> <span class="macro">format!</span>(
-                <span class="string">&quot;&lt;circle r=&#39;5&#39; fill=&#39;transparent&#39; cx=&#39;{x2_scaled}&#39; cy=&#39;{y_gene}&#39; onmousemove=&#39;showTooltip(evt, {chloro_gene_plus_range});&#39; onmouseout=&#39;hideTooltip();&#39;&gt;&lt;/circle&gt;&quot;</span>
+                <span class="string">&quot;&lt;circle r=&#39;5&#39; fill=&#39;transparent&#39; cx=&#39;{x2_scaled}&#39; cy=&#39;{y_gene}&#39; onmousemove=&#39;showTooltip(evt, {chloro_gene_plus_range});&#39; onmouseout=&#39;hideTooltip();&#39; onclick=&#39;addTextOnClick(evt, {gene_name})&#39;&gt;&lt;/circle&gt;&quot;</span>
             );
 
             <span class="ident">base_chroms</span> <span class="op">+</span><span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">gene_line</span>;
