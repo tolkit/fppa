@@ -161,7 +161,6 @@ impl PlotData {
         // construct the svg
         let svg = format!(
             "<svg width='{}' height='{}'>
-                <g id='textGroup'></g>
         <defs>
             <!-- This is an orange arrow pointer --> 
             <marker id='point_orange' viewBox='0 0 10 10'
@@ -181,6 +180,7 @@ impl PlotData {
             </marker>
         </defs>
     {}
+    <g id='textGroup'></g>
     \
 </svg>",
             WIDTH, height, base_chroms
