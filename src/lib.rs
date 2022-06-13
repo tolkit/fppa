@@ -36,7 +36,7 @@ pub mod plot;
 ///
 /// Takes a mitochondrial genome path, the path to executable
 /// nhmmer, and path to the generated HMM's (in this repo it's
-/// "./fastas/hmms/")
+/// "./hmms/")
 ///
 pub fn run_hmmer(
     mitochondrial_genome_path: PathBuf,
@@ -1325,13 +1325,17 @@ impl Nhmmer {
                 .collect();
 
             print!("{}\t", chlorogene);
+            // we collect as we don't want to print the last tab
+            let mut presence_string = String::new();
+
             for e in is_present {
                 match e {
-                    true => print!("true\t"),
-                    false => print!("false\t"),
+                    true => presence_string += "true\t",
+                    false => presence_string += "false\t",
                 }
             }
-            println!()
+            presence_string.pop();
+            println!("{}", presence_string);
         }
 
         Ok(plot_data)
